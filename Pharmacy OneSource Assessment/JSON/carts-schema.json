@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for shopping carts",
+
+  "type": "array",
+  "description": "Array of shopping carts",
+  "items": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "description": "Label for this cart object (eg: customer name)"
+      },
+      "contents": {
+        "type": "array",
+        "description": "Array of products",
+        "items": {
+          "type": "object",
+          "properties": {
+            "quantity": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "name": { "type": "string" },
+            "price": {
+              "description": "Price each",
+              "type": "number",
+              "minimum": 0
+            },
+            "tax-code": { "type": "string" }
+          },
+          "required": [ "quantity", "name", "price", "tax-code" ]
+          //end product
+        } //end product items
+      } //end contents
+    } //end cart
+  } //end carts items
+} //end carts

@@ -1,0 +1,26 @@
+﻿{
+  "import-rate": { "rate": 5.0 },
+  "states": [
+    {
+      "name": "Wisconsin",
+      "code": "WI",
+      "base-rate": 10.0,
+      "exempt": [ 4001, 4002, 4003 ]
+    },
+    {
+      "name": "Illinois",
+      "code": "IL",
+      "base-rate": 10,
+      "exceptions": [
+        {
+          "tax-code": 4002,
+          "rate": 5
+        },
+        {
+          "tax-code": 4003,
+          "rate": 5
+        }
+      ]
+    }
+  ]
+}

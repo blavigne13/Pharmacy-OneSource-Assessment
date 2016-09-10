@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for product catalog",
+
+  "type": "array",
+  "description": "An array of products",
+  "items": {
+    "type": "object",
+    "description": "A product in the catalog",
+    "properties": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "price": { "type": "number" },
+      "tax-code": { "type": "integer" },
+      "imported": { "type": "boolean" }
+    }
+  }
+}

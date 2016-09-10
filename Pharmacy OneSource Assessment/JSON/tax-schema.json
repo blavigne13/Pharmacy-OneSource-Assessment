@@ -1,0 +1,68 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "Tax Schedule",
+
+  "type": "object",
+  "properties": {
+    "import-rate": {
+      "description": "import tax rate",
+      "type": "object",
+      "properties": {
+        "rate": {
+          "description": "name of the state",
+          "type": "number"
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "name of the state",
+            "type": "string"
+          },
+          "code": {
+            "description": "2-letter state code",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2
+          },
+          "base-rate": {
+            "description": "default % tax rate for this state--eg: 5.5% tax is 5.5, not .055",
+            "type": "number",
+            "minimum": 0.0
+          },
+          "exempt": {
+            "description": "exempt tax codes",
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "exceptions": {
+            "description": "other exceptions to the default rate",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tax-code": {
+                  "description": "tax code of category to be taxed",
+                  "type": "integer"
+                },
+                "rate": {
+                  "description": "% tax rate to apply--eg: 5.5% tax is 5.5, not .055",
+                  "type": "number",
+                  "minimum": 0.0
+                }
+              },
+              "required": [ "tax-code", "rate" ]
+            }
+          }
+        },
+        "required": [ "code", "base-rate" ]
+      }
+    }
+  }
+}
