@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Pharmacy_OneSource_Assessment
 {
     /// <summary>
-    ///  
+    /// A class containing data for state tax rates and import duty rate.
     /// </summary>
     public class TaxSchedule
     {
