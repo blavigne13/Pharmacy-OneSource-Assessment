@@ -1,55 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using Pharmacy_OneSource_Assessment.Model;
+using Pharmacy_OneSource_Assessment.View;
+using System.Collections.Generic;
 
-namespace Pharmacy_OneSource_Assessment
+namespace Pharmacy_OneSource_Assessment.Controller
 {
     /// <summary>
-    ///  representation of an individual customer's shopping cart.
+    ///  Representation of an individual shopping cart.
     /// </summary>
     internal class Cart
     {
-        private Model.Customer Customer;
-        private TaxSchedule TaxSchedule;
-        private Dictionary<Model.Product, int> Contents;
+        // contents by (product, quantity)
+        public Dictionary<Product, int> Contents { get; private set; }
 
-        public Cart(Model.Customer customer, TaxSchedule taxSchedule)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cart"/> class.
+        /// </summary>
+        /// <param name="shopper">The customer.</param>
+        public Cart()
         {
-            //    // Not sure I like this method of ensuring that TaxCode is set, but I don't want to read and parse a
-            //    // file for each cart instance when the data is the same. Given the time constraint it will have to do.
-            //    if (TaxSchedule == null)
-            //    {
-            //        //throw new ApplicationException("Tax schedule must be set before carts may be instantiated.");
-            //    }
-
-            Customer = customer;
-            Contents = new Dictionary<Model.Product, int>();
-            TaxSchedule = taxSchedule;
+            Contents = new Dictionary<Product, int>();
         }
 
-        public void AddProduct(Model.Product product)
+        /// <summary>
+        /// Adds a product to the cart.
+        /// </summary>
+        /// <param name="product">The product to add.</param>
+        public void Add(Product product)
         {
-            Contents[product] = Contents.ContainsKey(product) ? Contents[product] : 1;
+            Contents[product] = Contents.ContainsKey(product) ? Contents[product] + 1 : 1;
         }
 
-        public override string ToString()
+        /// <summary>
+        /// Removes the specified product.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        public void Remove(Product product)
         {
-            var priceSum = 0.0;
-            var taxSum = 0.0;
-
-            StringBuilder invoice = new StringBuilder(Customer.Name + ":\n", Contents.Count * 50);
-            foreach (var product in Contents.Keys)
+            if (Contents[product] > 1)
             {
-                double tax = 0.0;
-                taxSum += tax;
-                priceSum += product.Price;
-
-                invoice.AppendLine(Contents[product] + " " + product.Name + " at " + (product.Price + tax));
+                Contents[product] = Contents[product] - 1;
             }
+            else
+            {
+                Contents.Remove(product);
+            }
+        }
 
-            invoice.AppendLine("\tSales Taxes: " + taxSum);
-            invoice.AppendLine("\tTotal: " + (priceSum + taxSum));
+        /// <summary>
+        /// Removes all of the specified product.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        public void RemoveAll(Product product)
+        {
+            Contents.Remove(product);
+        }
 
-            return invoice.ToString();
+        /// <summary>
+        /// Empties the cart.
+        /// </summary>
+        public void EmptyCart()
+        {
+            Contents.Clear();
         }
     }
 }
