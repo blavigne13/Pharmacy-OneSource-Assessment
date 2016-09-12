@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace Pharmacy_OneSource_Assessment
 {
     /// <summary>
-    /// Instantiates a Store and executes simulated customer interactions.
+    /// Executes simulated customer interactions.
     /// </summary>
     internal class CartSim
     {
@@ -38,6 +38,7 @@ namespace Pharmacy_OneSource_Assessment
 
                 if (match.Success)
                 {
+                    // generic Customer based upon file input rather than pulling customer data from the db
                     shopper = store.AddShopper(new Customer
                     {
                         FirstName = "Output",
@@ -58,6 +59,10 @@ namespace Pharmacy_OneSource_Assessment
             }
         }
 
+        /// <summary>
+        /// Reads the input file broken up by line.
+        /// </summary>
+        /// <returns>Input file as an array of strings</returns>
         private static string[] ReadInputFile()
         {
             var input = "";

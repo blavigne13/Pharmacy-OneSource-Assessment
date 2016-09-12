@@ -3,7 +3,7 @@
 namespace Pharmacy_OneSource_Assessment.View
 {
     /// <summary>
-    /// Interface describing an invoice viewer.
+    /// Abstract class describing an invoice viewer.
     /// </summary>
     internal abstract class Viewer
     {
