@@ -18,7 +18,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         public HashSet<Shopper> Shoppers { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Store"/> class.
+        /// Initializes a new instance of the <see cref="Store" /> class.
         /// </summary>
         public Store()
         {
@@ -30,7 +30,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         /// Gets a product by its product code.
         /// </summary>
         /// <param name="code">The code.</param>
-        /// <returns>A Product object</returns>
+        /// <returns>A Product object or null if empty</returns>
         public Product GetProductByCode(int code)
         {
             return db.Products
@@ -65,7 +65,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         /// Gets the product codes of all products matching a given label.
         /// </summary>
         /// <param name="price">The label.</param>
-        /// <returns>Product codes as an IQueryable of int</returns>
+        /// <returns>A Product object or null if empty</returns>
         public Product GetProductByPrice(double price)
         {
             return db.Products
@@ -78,7 +78,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         /// Instantiates a new shopper.
         /// </summary>
         /// <param name="customer">The customer.</param>
-        /// <returns>An object reference to the created Shopper</returns>
+        /// <returns>Returns a reference to the created Shopper for convenience.</returns>
         public Shopper AddShopper(Customer customer)
         {
             Shopper shopper = new Shopper(customer);

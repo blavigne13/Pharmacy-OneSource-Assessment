@@ -1,4 +1,5 @@
 ﻿using Pharmacy_OneSource_Assessment.Controller;
+using Pharmacy_OneSource_Assessment.Model;
 using System;
 using System.Text.RegularExpressions;
 
@@ -39,13 +40,14 @@ namespace Pharmacy_OneSource_Assessment.View
             foreach (var product in Shopper.Cart.Contents.Keys)
             {
                 var taxCode = Regex.Split(product.TaxCode, @"_");
+                var imported = taxCode[0].Equals(TaxServer.IMPORTED) ? " imported " : " ";
                 var price = product.Price * Shopper.Cart.Contents[product];
                 var tax = Model.TaxServer.CalculateTaxes(Shopper.Customer.Address.State, taxCode, price);
 
                 taxes += tax;
                 subtotal += price;
 
-                lines[i++] = "\t" + Shopper.Cart.Contents[product] + " " + product.InvoiceLabel + " at " + (product.Price + tax).ToString("0.00");
+                lines[i++] = "\t" + Shopper.Cart.Contents[product] + imported + product.InvoiceLabel + " at " + (product.Price + tax).ToString("0.00");
             }
 
             lines[i++] = "\tSales Taxes: " + taxes.ToString("0.00");

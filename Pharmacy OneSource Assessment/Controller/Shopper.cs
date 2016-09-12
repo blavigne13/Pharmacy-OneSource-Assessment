@@ -14,7 +14,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         public readonly Invoice Invoice;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Shopper"/> class.
+        /// Initializes a new instance of the <see cref="Shopper" /> class.
         /// </summary>
         /// <param name="customer">The customer.</param>
         public Shopper(Customer customer)

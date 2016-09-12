@@ -9,12 +9,10 @@ namespace Pharmacy_OneSource_Assessment.View
     /// <seealso cref="Pharmacy_OneSource_Assessment.View.Viewer" />
     internal class ConsoleView : Viewer
     {
-        private Shopper Shopper { get; set; }
-
         /// <summary>
-        /// Writes an invoice to console.
+        /// Writes the associated Invoice object to the console.
         /// </summary>
-        public void ViewInvoice()
+        public override void ViewInvoice()
         {
             Console.WriteLine(Shopper.Invoice.ToString());
         }

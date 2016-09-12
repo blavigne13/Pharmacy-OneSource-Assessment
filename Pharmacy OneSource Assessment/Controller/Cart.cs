@@ -13,9 +13,8 @@ namespace Pharmacy_OneSource_Assessment.Controller
         public Dictionary<Product, int> Contents { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cart"/> class.
+        /// Initializes a new instance of the <see cref="Cart" /> class.
         /// </summary>
-        /// <param name="shopper">The customer.</param>
         public Cart()
         {
             Contents = new Dictionary<Product, int>();
@@ -24,14 +23,14 @@ namespace Pharmacy_OneSource_Assessment.Controller
         /// <summary>
         /// Adds a product to the cart.
         /// </summary>
-        /// <param name="product">The product to add.</param>
-        public void Add(Product product)
+        /// <param name="product">The Product object to add.</param>
+        public void AddProduct(Product product)
         {
             Contents[product] = Contents.ContainsKey(product) ? Contents[product] + 1 : 1;
         }
 
         /// <summary>
-        /// Removes the specified product.
+        /// Removes the specified product. *untested*
         /// </summary>
         /// <param name="product">The product.</param>
         public void Remove(Product product)
@@ -47,7 +46,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         }
 
         /// <summary>
-        /// Removes all of the specified product.
+        /// Removes all of the specified product. *untested*
         /// </summary>
         /// <param name="product">The product.</param>
         public void RemoveAll(Product product)
@@ -56,7 +55,7 @@ namespace Pharmacy_OneSource_Assessment.Controller
         }
 
         /// <summary>
-        /// Empties the cart.
+        /// Empties the cart. *untested*
         /// </summary>
         public void EmptyCart()
         {

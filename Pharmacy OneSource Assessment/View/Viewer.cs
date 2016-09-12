@@ -5,8 +5,10 @@ namespace Pharmacy_OneSource_Assessment.View
     /// <summary>
     /// Interface describing an invoice viewer.
     /// </summary>
-    internal interface Viewer
+    internal abstract class Viewer
     {
-        void ViewInvoice();
+        protected Shopper Shopper;
+
+        public abstract void ViewInvoice();
     }
 }

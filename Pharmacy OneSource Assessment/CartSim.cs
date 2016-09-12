@@ -48,7 +48,7 @@ namespace Pharmacy_OneSource_Assessment
                 else
                 {
                     match = priceRegex.Match(line);
-                    shopper.Cart.Add(store.GetProductByPrice(Double.Parse(match.Value)));
+                    shopper.Cart.AddProduct(store.GetProductByPrice(Double.Parse(match.Value)));
                 }
             }
 
