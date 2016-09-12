@@ -45,17 +45,17 @@ namespace Pharmacy_OneSource_Assessment.View
                 taxes += tax;
                 subtotal += price;
 
-                lines[i++] = "\t" + Shopper.Cart.Contents[product] + " " + product.InvoiceLabel + " at " + (product.Price + tax);
+                lines[i++] = "\t" + Shopper.Cart.Contents[product] + " " + product.InvoiceLabel + " at " + (product.Price + tax).ToString("0.00");
             }
 
-            lines[i++] = "\tSales Taxes: " + taxes;
-            lines[i] = "\tTotal: " + (subtotal + taxes);
+            lines[i++] = "\tSales Taxes: " + taxes.ToString("0.00");
+            lines[i] = "\tTotal: " + (subtotal + taxes).ToString("0.00");
 
             return lines;
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this Invoice.
+        /// Returns a formatted <see cref="System.String"/> that represents this Invoice.
         /// </summary>
         /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()

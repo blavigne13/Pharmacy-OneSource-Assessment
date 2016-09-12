@@ -5,7 +5,7 @@
 Shopping Basket 2:
 1 imported box of chocolates at 10.00
 1 imported bottle of perfume at 47.50
-Shopping Basket 123:
+Shopping Basket 3:
 1 imported bottle of perfume at 27.99
 1 bottle of perfume at 18.99
 1 packet of headache pills at 9.75

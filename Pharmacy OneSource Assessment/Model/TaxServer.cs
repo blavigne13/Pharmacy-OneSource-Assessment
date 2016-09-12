@@ -48,16 +48,20 @@ namespace Pharmacy_OneSource_Assessment.Model
                 ReadTaxSchedule();
             }
 
-            var rate = StateTaxes[state][taxCode[1]] + (IMPORTED.Equals(taxCode[0]) ? importRate : 0.0);
+            // use base rate if tax code is not defined
+            taxCode[1] = StateTaxes[state].ContainsKey(taxCode[1]) ? taxCode[1] : BASE_RATE;
 
-            // tax rate is a percentage, so calculated tax needs to be divided by 100, but we need
-            // to round up to nearest nickel, so we divide by 20, get the ceiling, and then divide
-            // by the remaining factor of 5
-            return Math.Ceiling(price * rate / 20.0) / 5.0;
+            var rate = StateTaxes[state][taxCode[1]];
+            rate += IMPORTED.Equals(taxCode[0]) ? importRate : 0.0;
+
+            // tax rate is a percentage, so calculated tax needs to be divided by 100; but we need
+            // to round up to the nearest nickel, so we divide by 5 to get the price in nickels and
+            // take the ceiling, then divide by the remaining factor of 20
+            return Math.Ceiling(price * rate / 5.0) / 20.0;
         }
 
         /// <summary>
-        /// Read tax data from json file.
+        /// Read tax data from json file conforming to Resources\JSON\tax-schema.json.
         /// </summary>
         private static void ReadTaxSchedule()
         {
@@ -70,7 +74,7 @@ namespace Pharmacy_OneSource_Assessment.Model
                 foreach (var state in json["states"])
                 {
                     // get 2-letter state code
-                    string stateCode = (string)state["state-code"];
+                    var stateCode = (string)state["state-code"];
 
                     // instantiate state's dictionary
                     StateTaxes.Add(stateCode, new Dictionary<string, double>());
@@ -82,14 +86,6 @@ namespace Pharmacy_OneSource_Assessment.Model
                     foreach (var taxCode in state["exceptions"])
                     {
                         StateTaxes[stateCode].Add((string)taxCode["tax-code"], (double)taxCode["rate"]);
-                    }
-                }
-
-                foreach (var d in StateTaxes)
-                {
-                    foreach (var c in d.Value)
-                    {
-                        Console.WriteLine(c);
                     }
                 }
             }

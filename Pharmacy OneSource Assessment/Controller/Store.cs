@@ -62,12 +62,29 @@ namespace Pharmacy_OneSource_Assessment.Controller
         }
 
         /// <summary>
+        /// Gets the product codes of all products matching a given label.
+        /// </summary>
+        /// <param name="price">The label.</param>
+        /// <returns>Product codes as an IQueryable of int</returns>
+        public Product GetProductByPrice(double price)
+        {
+            return db.Products
+                .Where(p => p.Price.Equals(price))
+                .DefaultIfEmpty(null)
+                .FirstOrDefault();
+        }
+
+        /// <summary>
         /// Instantiates a new shopper.
         /// </summary>
         /// <param name="customer">The customer.</param>
-        public void AddShopper(Customer customer)
+        /// <returns>An object reference to the created Shopper</returns>
+        public Shopper AddShopper(Customer customer)
         {
-            Shoppers.Add(new Shopper(customer));
+            Shopper shopper = new Shopper(customer);
+            Shoppers.Add(shopper);
+
+            return shopper;
         }
     }
 }

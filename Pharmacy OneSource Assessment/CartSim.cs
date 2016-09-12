@@ -1,11 +1,14 @@
 ﻿using Pharmacy_OneSource_Assessment.Controller;
+using Pharmacy_OneSource_Assessment.Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Pharmacy_OneSource_Assessment
 {
+    /// <summary>
+    /// Instantiates a Store and executes simulated customer interactions.
+    /// </summary>
     internal class CartSim
     {
         public const string TAX_FILE = @"Resources\JSON\tax.json";
@@ -13,38 +16,49 @@ namespace Pharmacy_OneSource_Assessment
 
         public static void Main(string[] args)
         {
-            //DBTest();
-            //Model.TaxServer.ReadTaxSchedule();
             RunSimulation();
         }
 
+        /// <summary>
+        /// Runs the simulation. A Store instance is created and then a text file containing the
+        /// example input from the problem statement is parsed and used to query the database (via
+        /// the Store instance) for product information, then fed to the Store in something roughly
+        /// similar to the way it would be in a production environment.
+        /// </summary>
         private static void RunSimulation()
         {
-            //Queue<Cart> Carts = new Queue<Cart>();
+            var store = new Store();
+            Shopper shopper = null;
+            Regex custRegex = new Regex(@"(\d+:)$");
+            Regex priceRegex = new Regex(@"(\d+.\d+)$");
 
-            ReadInputFile();
-            //Cart c = new Cart(new Model.Customer());
+            foreach (var line in ReadInputFile())
+            {
+                Match match = custRegex.Match(line);
 
-            /*
-              while (!reader.EndOfStream)
+                if (match.Success)
                 {
-                    string line = reader.ReadLine();
-
-                    Regex regex = new Regex(@"(\d+:)$");
-                    Match match = regex.Match(line);
-                    if (match.Success)
+                    shopper = store.AddShopper(new Customer
                     {
-                        Console.WriteLine(match.Value);
-
-                        //carts.Enqueue(new Cart(new Model.Customer("Output ", match.Value.Substring(0, match.Value.Length - 1), new Model.Address(), new Model.Address()), taxSchedule));
-                    }
-
-                    //Console.WriteLine(line.EndsWith(":"));
+                        FirstName = "Output",
+                        LastName = match.Value.Substring(0, match.Value.Length - 1),
+                        Address = new Address { State = "WI" }
+                    });
                 }
-             */
+                else
+                {
+                    match = priceRegex.Match(line);
+                    shopper.Cart.Add(store.GetProductByPrice(Double.Parse(match.Value)));
+                }
+            }
+
+            foreach (var s in store.Shoppers)
+            {
+                Console.WriteLine(s.Invoice);
+            }
         }
 
-        private static string ReadInputFile()
+        private static string[] ReadInputFile()
         {
             var input = "";
 
@@ -53,32 +67,7 @@ namespace Pharmacy_OneSource_Assessment
                 input = reader.ReadToEnd();
             }
 
-            return input;
-        }
-
-        private static void DBTest()
-        {
-            Store s = new Controller.Store();
-            var price = 11.25;
-
-            List<Model.Product> l = s.GetProductsByLabel("box of chocolates")
-                .Where(p => p.Price.Equals(price))
-                .ToList<Model.Product>();
-
-            foreach (var v in l)
-            {
-                Console.WriteLine("__> " + v.InvoiceLabel + " " + v.TaxCode);
-            }
-
-            using (var db = new Model.PosDbContext())
-            {
-                Console.WriteLine(db.Customers.Count<Model.Customer>());
-
-                foreach (var c in db.Customers)
-                {
-                    Console.WriteLine(c.FirstName);
-                }
-            }
+            return Regex.Split(input, @"[\r\n]+");
         }
     }
 }
